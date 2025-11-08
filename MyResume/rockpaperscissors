@@ -1,3 +1,5 @@
+## this is R language for play rockpaperscissors
+
 play_with_me <- function(){
   
   user_name <- readline("What is your name? :")
