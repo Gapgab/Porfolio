@@ -1,0 +1,70 @@
+play_with_me <- function(){
+  
+  user_name <- readline("What is your name? :")
+  message("Hello ",user_name, "!. My Name is Yong. Welcome to my game!") 
+  message("The rule of the game is: We will play 10 rounds.") 
+  message("1. If you score more than me, you win.") 
+  message("2. If you score less than me, you lose.")
+  message("3. If you score equal to me, it's a draw.") 
+  message("4. If you quit the game, you lose.")
+  
+  hands <- c("rock","scissors","paper")
+  com_scores <- 0  # Computer score
+  user_scores <- 0  # Player score
+  turns <- 0      # Turn counter
+  
+  while(turns < 5) { # Play 5 rounds
+    turns <- turns + 1 # Increment turn counter at the beginning of each round
+    
+    com_hand <- sample(hands,1) # Computer's choice
+    
+    # Get user input and validate it within the loop
+    user_hand <- ""  # Initialize user_hand
+    while (!(user_hand %in% c(hands, "quit"))) {
+      user_hand <- readline(paste0("Turn ", turns, ": Choose your option (rock, scissors, paper, or quit): "))
+      if (!(user_hand %in% c(hands, "quit"))) {
+        message("Invalid choice. Please choose again.")
+      }
+    }
+    
+    
+    if(user_hand == "quit"){
+      message("Haha! You Lost! Try it Next Game")
+      return() # Exit the function if the user quits
+    }
+    
+    message("BOT hand : ",com_hand)
+    message("Your hand : ",user_hand)
+    
+    # Simplified scoring logic using switch and case
+    result <- switch(paste0(com_hand, "-", user_hand),
+                     "rock-scissors" = "com",
+                     "rock-paper" = "user",
+                     "scissors-rock" = "user",
+                     "scissors-paper" = "com",
+                     "paper-rock" = "com",
+                     "paper-scissors" = "user",
+                     "rock-rock" = "draw",
+                     "scissors-scissors" = "draw",
+                     "paper-paper" = "draw"
+    )
+    
+    if (result == "com") {
+      com_scores <- com_scores + 1
+    } else if (result == "user") {
+      user_scores <- user_scores + 1
+    }
+    
+    message("BOT Score : ",com_scores ," VS Your Scorce : ",user_scores)
+    
+  }
+  
+  # Game result
+  if(com_scores == user_scores ){
+    message(user_name," Draw!")
+  } else if(com_scores > user_scores ){
+    message( "Sorry!" user_name," Lost!")
+  } else if(com_scores < user_scores ){
+    message( "Congrat ! "user_name, " Won!")
+  }
+}
